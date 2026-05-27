@@ -1,0 +1,63 @@
+---
+title: "DEEP: Future Fit"
+author: "by Jess"
+format:
+    revealjs:
+        theme: [solarized, custom.scss]
+        slideNumber: true
+        show-slide-number: all
+        #reference-location: document
+        #logo: images/logo.png
+        footer: "https://deep-future-fit.netlify.app/"
+        chalkboard:
+            theme: whiteboard
+        #code-annotations: hover
+        css: styles.css
+        mermaid:
+          theme: default
+        highlight-style: github
+        #highlight-style: monochrome
+        #logo: qr-code.png
+        #multiplex: true
+editor:
+    render-on-save: true
+
+---
+
+# Review
+
+# Tutorial
+
+# Mobile Apps
+
+## React Native
+React Native is a framework for building *cross-platform* mobile apps.
+
+A framework is a set of tools and libraries that make it easier to build software.
+
+## Expo
+Expo is also a framework, but its focus is on:
+
+- Automating the build, test, and deployment process
+- Sharing code between platforms (e.g. Android and iOS)
+- Providing a simulation environment
+
+## Getting Started
+
+# Why is it Lossy?
+
+## "Packet Loss"
+
+## Inteference
+BLE operates on the 2.4 GHz frequency band, which is shared with other wireless technologies.
+
+- ISM devices (e.g. microwave ovens, medical diathermy devices)
+- WiFi
+- Bluetooth
+
+## Channel Hopping
+A channel is a specific frequency channel in between 2.4 GHz and 2.5 GHz.
+
+A BLE device can hop between channels to avoid interference.
+
+TODO: include diagram

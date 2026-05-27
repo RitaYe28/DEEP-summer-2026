@@ -1,0 +1,25 @@
+---
+title: "DEEP: Future Fit"
+author: "by Jess"
+format:
+    revealjs:
+        theme: [solarized, custom.scss]
+        slideNumber: true
+        show-slide-number: all
+        #reference-location: document
+        #logo: images/logo.png
+        footer: "https://deep-future-fit.netlify.app/"
+        chalkboard:
+            theme: whiteboard
+        #code-annotations: hover
+        css: styles.css
+        mermaid:
+          theme: default
+        highlight-style: github
+        #highlight-style: monochrome
+        #logo: qr-code.png
+        #multiplex: true
+editor:
+    render-on-save: true
+
+---

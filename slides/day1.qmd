@@ -92,8 +92,6 @@ The top 5 students will receive prizes!
 - 1 point per worksheet completed
 - 1 point for participating in discussions or asking a question at least once per day
 
-# Day 1
-
 # The Internet [Click Me!]()
 
 ##
@@ -658,54 +656,3 @@ gcc source_code.c -o name_of_executable
 `-o` means *output* the executable to a file called \<whatever comes after\>
 
 # Tutorial
-
-# Day 2
-
-# Review
-
-::: {.notes}
-blooket + discussion
-:::
-
-# Systems Programming
-
-## What is a System?
-- operating Systems
-- embedded systems
-
-## Computer Hardware
-
-## Arduino
-
-## Circuits
-Closed loop flow of electrons
-
-## Programming an Arduino
-
-## Number Representations
-
-::: {.notes}
-hand out worksheet
-:::
-
-# Javascript
-
-## Functions
-- arrow definition
-
-## Callback Functions
-
-## Array Functions
-
-## Variables
-- no need to define the type
-- let vs const
-
-## Printing to the Screen
-
-## Operations
-- three equals signs
-
-## Strings?
-
-# Day 3

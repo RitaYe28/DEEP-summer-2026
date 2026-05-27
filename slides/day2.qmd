@@ -1,0 +1,123 @@
+---
+title: "DEEP: Future Fit"
+author: "by Jess"
+format:
+    revealjs:
+        theme: [solarized, custom.scss]
+        slideNumber: true
+        show-slide-number: all
+        #reference-location: document
+        #logo: images/logo.png
+        footer: "https://deep-future-fit.netlify.app/"
+        chalkboard:
+            theme: whiteboard
+        #code-annotations: hover
+        css: styles.css
+        mermaid:
+          theme: default
+        highlight-style: github
+        #highlight-style: monochrome
+        #logo: qr-code.png
+        #multiplex: true
+editor:
+    render-on-save: true
+
+---
+# Review
+
+::: {.notes}
+blooket + discussion
+:::
+
+# Systems Programming
+
+## Systems
+
+- Operating Systems
+- Embedded Systems
+- Microcontrollers
+
+## Computer Hardware
+
+Every computer has a central processing unit (CPU) that executes instructions.
+
+Types of CPU architectures:
+
+- ARM (Raspberry Pi, Apple Silicon, Qualcomm Snapdragon)
+- x86 (Intel/AMD CPUs)
+- RISC-V
+
+## Bluetooth Low-Energy (BLE)
+Wireless communication designed for low-power, short-range communication.
+
+What applications or use cases is BLE good for?
+
+::: {.fragment .fade-in}
+- Fitness trackers
+- Healthcare devices
+- Smart sensors
+- Internet of Things (IoT) devices
+:::
+
+::: {.notes}
+compare with bluetooth
+:::
+
+## Modes
+
+Advertising: the device broadcasts its presence to nearby devices.
+
+<br>
+
+Connection: Bidirectional communication between central and peripheral devices.
+
+## Services and Characteristics
+
+Labels to organize BLE communication:
+
+- Services: a group of related characteristics that provide a specific functionality.
+- Characteristics: a single value that can be read or written by the central device.
+
+## Profiles
+BLE includes standard profiles that simplify development.
+
+For example:
+
+- Battery Service (0x180F)
+    - Battery Level Characteristic (0x2A19)
+- Heart Rate Service (0x180D)
+    - Heart Rate Measurement Characteristic (0x2A37)
+
+## Arduino
+
+
+## Circuits
+Closed loop flow of electrons
+
+## Programming an Arduino
+
+## Number Representations
+
+::: {.notes}
+hand out worksheet
+:::
+
+# Javascript
+
+## Functions
+- arrow definition
+
+## Callback Functions
+
+## Array Functions
+
+## Variables
+- no need to define the type
+- let vs const
+
+## Printing to the Screen
+
+## Operations
+- three equals signs
+
+## Strings?
