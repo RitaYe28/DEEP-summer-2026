@@ -32,17 +32,60 @@ editor:
 how would i debug my app?
 :::
 
-## Unit Tests
+## Tests
 
-## End-to-End Tests
+- Unit Tests
+    - isolated tests for individual components
+- End-to-End Tests
+    - testing the entire application
+- Regression Tests
+    - ensuring existing functionality is not broken
+
+::: {.fragment .fade-in}
+How would you test the Google search engine?
+:::
+
+::: {.notes}
+give examples of each
+:::
 
 ## Performance Profiling
 
+The performance of a function, program, or system depends on our goals.
+
+What are some metrics we can use to measure performance?
+
+::: {.fragment .fade-in}
+Consider the metric of loading times. When might this metric NOT be a good measure for performance?
+:::
+
+::: {.notes}
+login pages
+:::
+
 ## Throughput
+The rate at which data is successfully transmitted over a network from one point to another.
 
-## Uptime/Usage
+Why is high throughput good?
 
-## Transfer Rate
+::: {.fragment .fade-in}
+Why might we NOT want to increase throughput?
+:::
+
+::: {.notes}
+telephone line example
+:::
+
+## Usage
+The total amount of data transferred over a network.
+
+Why is high usage good?
+
+::: {.fragment .fade-in}
+[A good network should balance throughput and usage.]{.highlight-red}
+:::
+
+# Adding Metrics
 
 # Tutorial
 

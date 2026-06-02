@@ -395,6 +395,10 @@ const styles = StyleSheet.create({
 export default DataFetcher;
 ```
 
+::: {.notes}
+walk through the componentn and ask them what kind of logic each part is
+:::
+
 # Tutorial
 
 # Why is it Lossy?
