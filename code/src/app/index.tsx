@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -12,19 +12,19 @@ import {
   PermissionsAndroid,
   ActivityIndicator,
   Alert,
-} from 'react-native';
-import { BleManager, State } from 'react-native-ble-plx';
-import { atob } from 'react-native-quick-base64';
+} from "react-native";
+import { BleManager, Device, State } from "react-native-ble-plx";
+import { toByteArray } from "react-native-quick-base64";
 
 // BLE Heart Rate Service & Characteristic UUIDs (Bluetooth SIG standard)
-const HEART_RATE_SERVICE_UUID = '0000180d-0000-1000-8000-00805f9b34fb';
-const HEART_RATE_CHARACTERISTIC_UUID = '00002a37-0000-1000-8000-00805f9b34fb';
+const HEART_RATE_SERVICE_UUID = "0000180d-0000-1000-8000-00805f9b34fb";
+const HEART_RATE_CHARACTERISTIC_UUID = "00002a37-0000-1000-8000-00805f9b34fb";
 
 // ─── Singleton BLE manager ────────────────────────────────────────────────────
 const bleManager = new BleManager();
 
 // ─── Parse Heart Rate Measurement characteristic (BT SIG spec) ───────────────
-function parseHeartRate(base64Value) {
+function parseHeartRate(base64Value: string) {
   const raw = atob(base64Value);
   const bytes = Array.from(raw).map((c) => c.charCodeAt(0));
   const flags = bytes[0];
@@ -44,7 +44,7 @@ function parseHeartRate(base64Value) {
 }
 
 // ─── Pulse animation component ───────────────────────────────────────────────
-function PulseRing({ bpm }) {
+function PulseRing({ bpm }: { bpm: number }) {
   const scale = useRef(new Animated.Value(1)).current;
   const opacity = useRef(new Animated.Value(0.6)).current;
 
@@ -53,12 +53,28 @@ function PulseRing({ bpm }) {
     const interval = (60 / bpm) * 1000;
     const pulse = Animated.sequence([
       Animated.parallel([
-        Animated.timing(scale, { toValue: 1.35, duration: 180, useNativeDriver: true }),
-        Animated.timing(opacity, { toValue: 0, duration: 180, useNativeDriver: true }),
+        Animated.timing(scale, {
+          toValue: 1.35,
+          duration: 180,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 180,
+          useNativeDriver: true,
+        }),
       ]),
       Animated.parallel([
-        Animated.timing(scale, { toValue: 1, duration: 0, useNativeDriver: true }),
-        Animated.timing(opacity, { toValue: 0.6, duration: 0, useNativeDriver: true }),
+        Animated.timing(scale, {
+          toValue: 1,
+          duration: 0,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0.6,
+          duration: 0,
+          useNativeDriver: true,
+        }),
       ]),
     ]);
     const loop = setInterval(() => pulse.start(), interval);
@@ -67,36 +83,57 @@ function PulseRing({ bpm }) {
 
   return (
     <Animated.View
-      style={[
-        styles.pulseRing,
-        { transform: [{ scale }], opacity },
-      ]}
+      style={[styles.pulseRing, { transform: [{ scale }], opacity }]}
     />
   );
 }
 
 // ─── BPM Gauge ────────────────────────────────────────────────────────────────
-function BpmGauge({ bpm }) {
+function BpmGauge({ bpm }: { bpm: number }) {
   const heartScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     if (!bpm) return;
     Animated.sequence([
-      Animated.timing(heartScale, { toValue: 1.2, duration: 100, useNativeDriver: true }),
-      Animated.timing(heartScale, { toValue: 1, duration: 100, useNativeDriver: true }),
+      Animated.timing(heartScale, {
+        toValue: 1.2,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(heartScale, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
     ]).start();
   }, [bpm]);
 
-  const zone = bpm < 60 ? '#4fc3f7' : bpm < 100 ? '#a5d6a7' : bpm < 140 ? '#fff176' : '#ef9a9a';
-  const zoneLabel = bpm < 60 ? 'RESTING' : bpm < 100 ? 'NORMAL' : bpm < 140 ? 'ELEVATED' : 'HIGH';
+  const zone =
+    bpm < 60
+      ? "#4fc3f7"
+      : bpm < 100
+        ? "#a5d6a7"
+        : bpm < 140
+          ? "#fff176"
+          : "#ef9a9a";
+  const zoneLabel =
+    bpm < 60
+      ? "RESTING"
+      : bpm < 100
+        ? "NORMAL"
+        : bpm < 140
+          ? "ELEVATED"
+          : "HIGH";
 
   return (
     <View style={styles.gaugeContainer}>
       <PulseRing bpm={bpm} />
-      <Animated.View style={[styles.heartIcon, { transform: [{ scale: heartScale }] }]}>
+      <Animated.View
+        style={[styles.heartIcon, { transform: [{ scale: heartScale }] }]}
+      >
         <Text style={[styles.heartEmoji]}>♥</Text>
       </Animated.View>
-      <Text style={[styles.bpmValue, { color: zone }]}>{bpm ?? '--'}</Text>
+      <Text style={[styles.bpmValue, { color: zone }]}>{bpm ?? "--"}</Text>
       <Text style={styles.bpmUnit}>BPM</Text>
       {bpm != null && (
         <View style={[styles.zoneBadge, { borderColor: zone }]}>
@@ -108,15 +145,29 @@ function BpmGauge({ bpm }) {
 }
 
 // ─── Device row ───────────────────────────────────────────────────────────────
-function DeviceRow({ device, onPress, isConnecting }) {
-  const rssiBar = Math.max(0, Math.min(100, (device.rssi + 100) * 2));
+function DeviceRow({
+  device,
+  onPress,
+  isConnecting,
+}: {
+  device: Device;
+  onPress: (device: Device) => void;
+  isConnecting: boolean;
+}) {
+  const rssiBar = Math.max(0, Math.min(100, (device.rssi ?? 0 + 100) * 2));
   return (
-    <TouchableOpacity style={styles.deviceRow} onPress={() => onPress(device)} activeOpacity={0.75}>
+    <TouchableOpacity
+      style={styles.deviceRow}
+      onPress={() => onPress(device)}
+      activeOpacity={0.75}
+    >
       <View style={styles.deviceInfo}>
         <Text style={styles.deviceName} numberOfLines={1}>
-          {device.name || 'Unknown Device'}
+          {device.name || "Unknown Device"}
         </Text>
-        <Text style={styles.deviceId} numberOfLines={1}>{device.id}</Text>
+        <Text style={styles.deviceId} numberOfLines={1}>
+          {device.id}
+        </Text>
         <View style={styles.rssiRow}>
           <View style={styles.rssiTrack}>
             <View style={[styles.rssiBar, { width: `${rssiBar}%` }]} />
@@ -135,19 +186,21 @@ function DeviceRow({ device, onPress, isConnecting }) {
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
-  const [bleState, setBleState] = useState('Unknown');
+  const [bleState, setBleState] = useState("Unknown");
   const [scanning, setScanning] = useState(false);
-  const [devices, setDevices] = useState([]);
-  const [connectedDevice, setConnectedDevice] = useState(null);
-  const [connectingId, setConnectingId] = useState(null);
-  const [heartRate, setHeartRate] = useState(null);
-  const [rrIntervals, setRrIntervals] = useState([]);
+  const [devices, setDevices] = useState<Device[]>([]);
+  const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
+  const [connectingId, setConnectingId] = useState<string | null>(null);
+  const [heartRate, setHeartRate] = useState(0);
+  const [rrIntervals, setRrIntervals] = useState<number[]>([]);
   const [log, setLog] = useState([]);
-  const subscription = useRef(null);
-  const scanTimeout = useRef(null);
+  const subscription = useRef<any>(null);
+  const scanTimeout = useRef<any>(null);
 
-  const addLog = useCallback((msg) => {
-    setLog((prev) => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev].slice(0, 30));
+  const addLog = useCallback((msg: string) => {
+    // setLog((prev) =>
+    //   [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev].slice(0, 30),
+    // );
   }, []);
 
   // Monitor BLE state
@@ -161,7 +214,7 @@ export default function App() {
 
   // Android permissions
   async function requestPermissions() {
-    if (Platform.OS !== 'android') return true;
+    if (Platform.OS !== "android") return true;
     const apiLevel = Platform.Version;
     if (apiLevel >= 31) {
       const results = await PermissionsAndroid.requestMultiple([
@@ -169,10 +222,12 @@ export default function App() {
         PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       ]);
-      return Object.values(results).every((r) => r === PermissionsAndroid.RESULTS.GRANTED);
+      return Object.values(results).every(
+        (r) => r === PermissionsAndroid.RESULTS.GRANTED,
+      );
     } else {
       const result = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );
       return result === PermissionsAndroid.RESULTS.GRANTED;
     }
@@ -180,17 +235,20 @@ export default function App() {
 
   async function startScan() {
     if (bleState !== State.PoweredOn) {
-      Alert.alert('Bluetooth Off', 'Please enable Bluetooth to scan for devices.');
+      Alert.alert(
+        "Bluetooth Off",
+        "Please enable Bluetooth to scan for devices.",
+      );
       return;
     }
     const granted = await requestPermissions();
     if (!granted) {
-      Alert.alert('Permission Denied', 'Bluetooth permissions are required.');
+      Alert.alert("Permission Denied", "Bluetooth permissions are required.");
       return;
     }
     setDevices([]);
     setScanning(true);
-    addLog('Scanning for Heart Rate sensors…');
+    addLog("Scanning for Heart Rate sensors…");
 
     bleManager.startDeviceScan(
       [HEART_RATE_SERVICE_UUID],
@@ -202,19 +260,29 @@ export default function App() {
           return;
         }
         if (device) {
+          const existingDevice = devices.find((d) => d.id === device.id);
+          if (existingDevice) return;
+
           setDevices((prev) => {
-            if (prev.find((d) => d.id === device.id)) return prev;
-            addLog(`Found: ${device.name || device.id}`);
-            return [...prev, { id: device.id, name: device.name, rssi: device.rssi }];
+            return [...prev, device];
           });
+
+          // setDevices((prev) => {
+          //   if (prev.find((d) => d.id === device.id)) return prev;
+          //   addLog(`Found: ${device.name || device.id}`);
+          //   return [
+          //     ...prev,
+          //     { id: device.id, name: device.name, rssi: device.rssi },
+          //   ];
+          // });
         }
-      }
+      },
     );
 
     scanTimeout.current = setTimeout(() => {
       bleManager.stopDeviceScan();
       setScanning(false);
-      addLog('Scan complete.');
+      addLog("Scan complete.");
     }, 12000);
   }
 
@@ -222,17 +290,17 @@ export default function App() {
     bleManager.stopDeviceScan();
     clearTimeout(scanTimeout.current);
     setScanning(false);
-    addLog('Scan stopped.');
+    addLog("Scan stopped.");
   }
 
-  async function connectToDevice(device) {
+  async function connectToDevice(device: Device) {
     stopScan();
     setConnectingId(device.id);
     addLog(`Connecting to ${device.name || device.id}…`);
     try {
       const connected = await bleManager.connectToDevice(device.id);
       await connected.discoverAllServicesAndCharacteristics();
-      setConnectedDevice({ id: device.id, name: device.name });
+      setConnectedDevice(device);
       addLog(`Connected! Subscribing to Heart Rate…`);
       subscription.current = connected.monitorCharacteristicForService(
         HEART_RATE_SERVICE_UUID,
@@ -243,15 +311,17 @@ export default function App() {
             return;
           }
           if (characteristic?.value) {
-            const { heartRate: hr, rrIntervals: rr } = parseHeartRate(characteristic.value);
+            const { heartRate: hr, rrIntervals: rr } = parseHeartRate(
+              characteristic.value,
+            );
             setHeartRate(hr);
             setRrIntervals(rr);
           }
-        }
+        },
       );
-    } catch (e) {
+    } catch (e: any) {
       addLog(`Connection failed: ${e.message}`);
-      Alert.alert('Connection Failed', e.message);
+      Alert.alert("Connection Failed", e.message);
     } finally {
       setConnectingId(null);
     }
@@ -265,7 +335,7 @@ export default function App() {
     } catch (_) {}
     addLog(`Disconnected from ${connectedDevice.name || connectedDevice.id}`);
     setConnectedDevice(null);
-    setHeartRate(null);
+    setHeartRate(0);
     setRrIntervals([]);
   }
 
@@ -279,20 +349,29 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>PULSE</Text>
         <Text style={styles.headerSub}>BLE Heart Rate Monitor</Text>
-        <View style={[styles.bleDot, { backgroundColor: bleState === 'PoweredOn' ? '#69f0ae' : '#ef5350' }]} />
+        <View
+          style={[
+            styles.bleDot,
+            {
+              backgroundColor: bleState === "PoweredOn" ? "#69f0ae" : "#ef5350",
+            },
+          ]}
+        />
       </View>
 
       {/* Connected view */}
       {isConnected ? (
         <View style={styles.connectedContainer}>
           <Text style={styles.connectedLabel}>
-            ⬤  {connectedDevice.name || connectedDevice.id}
+            ⬤ {connectedDevice.name || connectedDevice.id}
           </Text>
           <BpmGauge bpm={heartRate} />
           {rrIntervals.length > 0 && (
             <View style={styles.rrContainer}>
               <Text style={styles.rrLabel}>RR INTERVALS</Text>
-              <Text style={styles.rrValues}>{rrIntervals.map((r) => `${r}ms`).join('  ·  ')}</Text>
+              <Text style={styles.rrValues}>
+                {rrIntervals.map((r) => `${r}ms`).join("  ·  ")}
+              </Text>
             </View>
           )}
           <TouchableOpacity style={styles.disconnectBtn} onPress={disconnect}>
@@ -321,7 +400,9 @@ export default function App() {
             <View style={styles.emptyState}>
               <Text style={styles.emptyIcon}>📡</Text>
               <Text style={styles.emptyText}>
-                {scanning ? 'Searching for Heart Rate sensors nearby…' : 'No sensors found yet.\nTap Scan to begin.'}
+                {scanning
+                  ? "Searching for Heart Rate sensors nearby…"
+                  : "No sensors found yet.\nTap Scan to begin."}
               </Text>
             </View>
           ) : (
@@ -339,7 +420,7 @@ export default function App() {
               )}
               ListHeaderComponent={
                 <Text style={styles.listHeader}>
-                  {devices.length} SENSOR{devices.length !== 1 ? 'S' : ''} FOUND
+                  {devices.length} SENSOR{devices.length !== 1 ? "S" : ""} FOUND
                 </Text>
               }
             />
@@ -365,7 +446,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#0a0a0f',
+    backgroundColor: "#0a0a0f",
   },
 
   // Header
@@ -374,24 +455,24 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e1e2e',
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderBottomColor: "#1e1e2e",
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
   },
   headerTitle: {
-    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
+    fontFamily: Platform.OS === "ios" ? "Courier New" : "monospace",
     fontSize: 22,
-    fontWeight: '700',
-    color: '#ef5350',
+    fontWeight: "700",
+    color: "#ef5350",
     letterSpacing: 6,
   },
   headerSub: {
     fontSize: 11,
-    color: '#555570',
+    color: "#555570",
     letterSpacing: 1,
     flex: 1,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   bleDot: {
     width: 8,
@@ -402,53 +483,53 @@ const styles = StyleSheet.create({
   // Connected view
   connectedContainer: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     paddingHorizontal: 24,
     paddingTop: 8,
   },
   connectedLabel: {
-    color: '#69f0ae',
+    color: "#69f0ae",
     fontSize: 12,
     letterSpacing: 2,
     marginBottom: 8,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
 
   // Gauge
   gaugeContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 16,
-    position: 'relative',
+    position: "relative",
     width: 180,
     height: 180,
   },
   pulseRing: {
-    position: 'absolute',
+    position: "absolute",
     width: 160,
     height: 160,
     borderRadius: 80,
     borderWidth: 2,
-    borderColor: '#ef5350',
+    borderColor: "#ef5350",
   },
   heartIcon: {
     marginBottom: 4,
   },
   heartEmoji: {
     fontSize: 32,
-    color: '#ef5350',
+    color: "#ef5350",
   },
   bpmValue: {
-    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
+    fontFamily: Platform.OS === "ios" ? "Courier New" : "monospace",
     fontSize: 52,
-    fontWeight: '700',
+    fontWeight: "700",
     lineHeight: 58,
-    color: '#a5d6a7',
+    color: "#a5d6a7",
   },
   bpmUnit: {
     fontSize: 13,
     letterSpacing: 4,
-    color: '#555570',
+    color: "#555570",
     marginTop: 2,
   },
   zoneBadge: {
@@ -461,44 +542,44 @@ const styles = StyleSheet.create({
   zoneText: {
     fontSize: 10,
     letterSpacing: 3,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 
   // RR
   rrContainer: {
-    backgroundColor: '#12121f',
+    backgroundColor: "#12121f",
     borderRadius: 10,
     padding: 14,
-    width: '100%',
+    width: "100%",
     marginBottom: 16,
   },
   rrLabel: {
     fontSize: 10,
-    color: '#555570',
+    color: "#555570",
     letterSpacing: 3,
     marginBottom: 6,
   },
   rrValues: {
-    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
+    fontFamily: Platform.OS === "ios" ? "Courier New" : "monospace",
     fontSize: 12,
-    color: '#aaaacc',
+    color: "#aaaacc",
     lineHeight: 18,
   },
 
   // Disconnect
   disconnectBtn: {
     borderWidth: 1,
-    borderColor: '#ef5350',
+    borderColor: "#ef5350",
     paddingHorizontal: 32,
     paddingVertical: 12,
     borderRadius: 8,
     marginTop: 4,
   },
   disconnectBtnText: {
-    color: '#ef5350',
+    color: "#ef5350",
     fontSize: 13,
     letterSpacing: 3,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   // Scan view
@@ -508,23 +589,23 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   scanBtn: {
-    backgroundColor: '#ef5350',
+    backgroundColor: "#ef5350",
     borderRadius: 10,
     paddingVertical: 16,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   scanBtnActive: {
-    backgroundColor: '#b71c1c',
+    backgroundColor: "#b71c1c",
   },
   scanBtnInner: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
   },
   scanBtnText: {
-    color: '#0a0a0f',
-    fontWeight: '700',
+    color: "#0a0a0f",
+    fontWeight: "700",
     fontSize: 14,
     letterSpacing: 3,
   },
@@ -532,8 +613,8 @@ const styles = StyleSheet.create({
   // Empty state
   emptyState: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     opacity: 0.5,
   },
   emptyIcon: {
@@ -541,9 +622,9 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   emptyText: {
-    color: '#666680',
+    color: "#666680",
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: 22,
   },
 
@@ -553,57 +634,57 @@ const styles = StyleSheet.create({
   },
   listHeader: {
     fontSize: 10,
-    color: '#555570',
+    color: "#555570",
     letterSpacing: 3,
     marginBottom: 10,
   },
   deviceRow: {
-    backgroundColor: '#12121f',
+    backgroundColor: "#12121f",
     borderRadius: 10,
     padding: 14,
     marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#1e1e2e',
+    borderColor: "#1e1e2e",
   },
   deviceInfo: { flex: 1 },
   deviceName: {
-    color: '#e0e0f0',
+    color: "#e0e0f0",
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 2,
   },
   deviceId: {
-    color: '#555570',
+    color: "#555570",
     fontSize: 10,
-    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
+    fontFamily: Platform.OS === "ios" ? "Courier New" : "monospace",
     marginBottom: 8,
   },
   rssiRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
   },
   rssiTrack: {
     flex: 1,
     height: 3,
-    backgroundColor: '#1e1e2e',
+    backgroundColor: "#1e1e2e",
     borderRadius: 2,
   },
   rssiBar: {
     height: 3,
-    backgroundColor: '#ef5350',
+    backgroundColor: "#ef5350",
     borderRadius: 2,
   },
   rssiText: {
-    color: '#555570',
+    color: "#555570",
     fontSize: 10,
     width: 55,
-    textAlign: 'right',
+    textAlign: "right",
   },
   connectArrow: {
-    color: '#ef5350',
+    color: "#ef5350",
     fontSize: 28,
     marginLeft: 12,
     lineHeight: 30,
@@ -613,22 +694,22 @@ const styles = StyleSheet.create({
   logContainer: {
     height: 130,
     borderTopWidth: 1,
-    borderTopColor: '#1e1e2e',
+    borderTopColor: "#1e1e2e",
     paddingHorizontal: 16,
     paddingTop: 8,
-    backgroundColor: '#08080d',
+    backgroundColor: "#08080d",
   },
   logHeader: {
     fontSize: 9,
-    color: '#333350',
+    color: "#333350",
     letterSpacing: 3,
     marginBottom: 4,
   },
   logList: { flex: 1 },
   logEntry: {
-    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
+    fontFamily: Platform.OS === "ios" ? "Courier New" : "monospace",
     fontSize: 10,
-    color: '#444460',
+    color: "#444460",
     lineHeight: 16,
   },
 });
