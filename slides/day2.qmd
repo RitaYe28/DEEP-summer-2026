@@ -147,15 +147,17 @@ printf("  5 << 1 = %d  (left shift by 1)\n\n", 5 << 1);
 
 # Tutorial
 
+
 # Javascript
----
+
+
 ## Introduction 
 - JavaScript is the **programming language for websites**.
 - It can:
   - Calculate and manipulate data.
   - Update and modify HTML and CSS.
 - Used to create interactive websites.
----
+
 
 
 
@@ -183,7 +185,6 @@ score = 20; // Error
 ```
 
 Once assigned, a `const` variable cannot change to another value.
----
 
 
 
@@ -216,7 +217,7 @@ Output:
 ```
 5 10
 ```
----
+
 
 
 
@@ -236,7 +237,7 @@ let b = 3;
 | `a / b` | 3.333... |
 | `a % b` | 1 |
 | `a ** b` | 1000 |
----
+
 
 
 ## Operations
@@ -261,7 +262,7 @@ x /= 2;   // 9
 ```
 
 Comparison operators return either `true` or `false`.
----
+
 
 ## Operations
 ### Double Equals vs Triple Equals
@@ -293,7 +294,7 @@ Examples:
 ```
 
 > With `===`, both the value and type must match.
----
+
 
 
 
@@ -303,7 +304,9 @@ Examples:
 ## Functions
 - arrow definition
 
+
 ## Callback Functions
+
 
 ## Array Functions
 
@@ -313,5 +316,6 @@ Examples:
 
 
 ## Strings?
+
 
 ## Object Destructuring
