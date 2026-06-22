@@ -157,8 +157,29 @@ printf("  5 << 1 = %d  (left shift by 1)\n\n", 5 << 1);
 ## Array Functions
 
 ## Variables
-- no need to define the type
-- let vs const
+JavaScript variables store data.
+
+### `let`
+
+Used when the value may change.
+
+```js
+let score = 10;
+score = 20;
+```
+
+### `const`
+
+Used when the variable should not be reassigned.
+
+```js
+const score = 10;
+
+score = 20; // Error
+```
+
+Once assigned, a `const` variable cannot change to another value.
+
 
 ## Printing to the Screen
 
