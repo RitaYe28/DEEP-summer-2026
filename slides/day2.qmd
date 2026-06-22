@@ -148,13 +148,18 @@ printf("  5 << 1 = %d  (left shift by 1)\n\n", 5 << 1);
 # Tutorial
 
 # Javascript
-
+---
 ## Introduction 
 - JavaScript is the **programming language for websites**.
 - It can:
   - Calculate and manipulate data.
   - Update and modify HTML and CSS.
 - Used to create interactive websites.
+---
+
+
+
+
 
 ## Variables
 JavaScript variables store data.
@@ -178,6 +183,122 @@ score = 20; // Error
 ```
 
 Once assigned, a `const` variable cannot change to another value.
+---
+
+
+
+
+# Printing Output
+
+## `console.log()`
+
+```js
+console.log("Hello");
+```
+
+Output:
+
+```
+Hello
+```
+
+## Multiple Values
+
+```js
+let a = 5;
+let b = 10;
+
+console.log(a, b);
+```
+
+Output:
+
+```
+5 10
+```
+---
+
+
+
+## Operations
+### Arithmetic Operators
+
+```js
+let a = 10;
+let b = 3;
+```
+
+| Expression | Result |
+|------------|--------|
+| `a + b` | 13 |
+| `a - b` | 7 |
+| `a * b` | 30 |
+| `a / b` | 3.333... |
+| `a % b` | 1 |
+| `a ** b` | 1000 |
+---
+
+
+## Operations
+### Assignment Operators
+
+```js
+let x = 5;
+
+x += 2;   // 7
+x -= 1;   // 6
+x *= 3;   // 18
+x /= 2;   // 9
+```
+
+### Comparison Operators
+
+```js
+5 > 3;   // true
+5 < 3;   // false
+5 >= 5;  // true
+5 <= 4;  // false
+```
+
+Comparison operators return either `true` or `false`.
+---
+
+## Operations
+### Double Equals vs Triple Equals
+
+#### Double Equals (`==`)
+
+Performs type conversion or only value matteres.
+
+```js
+5 == "5";      // true
+true == 1;     // true
+false == 0;    // true
+```
+
+#### Triple Equals (`===`)
+
+Checks both value and type.
+
+```js
+5 === 5;     // true
+5 === "5";   // false
+```
+
+Examples:
+
+```js
+0 == false;   // true
+0 === false;  // false
+```
+
+> With `===`, both the value and type must match.
+---
+
+
+
+
+
 
 ## Functions
 - arrow definition
@@ -186,10 +307,10 @@ Once assigned, a `const` variable cannot change to another value.
 
 ## Array Functions
 
-## Printing to the Screen
 
-## Operations
-- three equals signs
+
+
+
 
 ## Strings?
 
