@@ -149,12 +149,12 @@ printf("  5 << 1 = %d  (left shift by 1)\n\n", 5 << 1);
 
 # Javascript
 
-## Functions
-- arrow definition
-
-## Callback Functions
-
-## Array Functions
+## Introduction 
+- JavaScript is the **programming language for websites**.
+- It can:
+  - Calculate and manipulate data.
+  - Update and modify HTML and CSS.
+- Used to create interactive websites.
 
 ## Variables
 JavaScript variables store data.
@@ -174,12 +174,17 @@ Used when the variable should not be reassigned.
 
 ```js
 const score = 10;
-
 score = 20; // Error
 ```
 
 Once assigned, a `const` variable cannot change to another value.
 
+## Functions
+- arrow definition
+
+## Callback Functions
+
+## Array Functions
 
 ## Printing to the Screen
 
