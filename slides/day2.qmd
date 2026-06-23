@@ -263,7 +263,7 @@ x /= 2;   // 9
 Comparison operators return either `true` or `false`.
 
 
-## Operations: Double Equals vs Triple Equals
+## Operations: Double vs Triple Equals
 
 #### Double Equals (`==`)
 
@@ -284,11 +284,6 @@ Checks both value and type.
 5 === "5";   // false
 ```
 
-```js
-0 == false;   // true
-0 === false;  // false
-```
-
 > With `===`, both the value and type must match.
 
 
@@ -304,10 +299,9 @@ Instead of repeating:
 ```js
 console.log("Hello");
 console.log("Hello");
-console.log("Hello");
 ```
 
-Define once:
+You can define the function once and call repeatedly:
 
 ```js
 function sayHello() {
@@ -315,18 +309,15 @@ function sayHello() {
 }
 ```
 
-Call repeatedly:
-
 ```js
 sayHello();
 sayHello();
-sayHello();
+...
 ```
 
 Output:
 
 ```
-Hello
 Hello
 Hello
 ```
@@ -342,19 +333,19 @@ function greet(name) {
 Usage:
 
 ```js
-greet("Bob");
-greet("Alice");
+greet("Rita");
+greet("Saniya");
 ```
 
 Output:
 
 ```
-Hello Bob
-Hello Alice
+Hello Rita
+Hello Saniya
 ```
 
 - Parameter: `name`
-- Argument: `"Bob"` or `"Alice"`
+- Argument: `"Rita"` or `"Saniya"`
 
 ## Functions: Functions as Values
 
@@ -443,6 +434,7 @@ Access elements:
 
 ```js
 console.log(nums[0]); // 10
+```
 
 ## Array Functions
 
@@ -489,7 +481,6 @@ Meaning: Add something to the end of the array.
 
 ```js
 const nums = [1, 2, 3];
-
 nums.push(4);
 ```
 
@@ -500,19 +491,6 @@ Result:
 ```
 
 Can also add multiple items
-
-```js
-const nums = [1, 2, 3];
-
-nums.push(4, 5);
-
-```
-
-Output:
-
-```js
-[1, 2, 3, 4, 5]
-```
 
 ### pop()
 
@@ -531,9 +509,71 @@ Result:
 ```
 
 
+## Strings
+A string is a sequence of characters enclosed by '' or "".
 
+```js
+const word = "hello";
+```
 
-## Strings?
+Like arrays, characters are accessed by index:
 
+```js
+console.log(word[0]); // h
+console.log(word[4]); // o
+```
+Strings are immutable
+
+```js
+word[0] = "H";
+console.log(word); // "hello"
+```
+
+This does **not** change the string.
+
+Accessing length: 
+
+```js
+console.log(word.length); // 5
+```
+
+## Objects
+
+Like struct in C, objects allows us to group related information together.
+
+```js
+const student = {
+  name: "Rita",
+  age: 19,
+  major: "Electrical Engineering"
+};
+```
+
+Access information using `.`:
+
+```js
+console.log(student.name); // Rita
+console.log(student.age);  // 19
+```
 
 ## Object Destructuring
+
+Object destructuring is a shortcut that lets you take values from an object and directly turn them into variables.
+
+Instead of:
+
+```js
+const name = student.name; // breaking into separate variables
+const age = student.age;
+```
+
+We can write this:
+
+```js
+const { name, age } = student;
+```
+```js
+console.log(name); // Rita
+console.log(age);  // 19
+```
+
