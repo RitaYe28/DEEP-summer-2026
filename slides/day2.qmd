@@ -149,22 +149,426 @@ printf("  5 << 1 = %d  (left shift by 1)\n\n", 5 << 1);
 
 # Javascript
 
-## Functions
-- arrow definition
+
+## Introduction 
+- JavaScript is the **programming language for websites**.
+- It can:
+  - Calculate and manipulate data.
+  - Update and modify HTML and CSS.
+- Used to create interactive websites.
+
+
+
+
+
+
+## Variables
+JavaScript variables store data.
+
+### `let`
+
+Used when the value may change.
+
+```js
+let score = 10;
+score = 20;
+```
+
+### `const`
+
+Used when the variable should not be reassigned.
+
+```js
+const score = 10;
+score = 20; // Error
+```
+
+Once assigned, a `const` variable cannot change to another value.
+
+
+
+
+## Printing Output
+
+### `console.log()`
+
+```js
+console.log("Hello");
+```
+
+Output:
+
+```
+Hello
+```
+
+### Multiple Values
+
+```js
+let a = 5;
+let b = 10;
+
+console.log(a, b);
+```
+
+Output:
+
+```
+5 10
+```
+
+
+
+
+## Operations: Arithmetic Operators
+
+```js
+let a = 10;
+let b = 3;
+```
+
+| Operation | Expression | Result |
+|-----------|------------|--------|
+| Addition | `a + b` | 13 |
+| Subtraction | `a - b` | 7 |
+| Multiplication | `a * b` | 30 |
+| Division | `a / b` | 3.333... |
+| Modulus (Remainder) | `a % b` | 1 |
+| Exponentiation | `a ** b` | 1000 |
+
+
+
+## Operations
+### Assignment Operators
+
+```js
+let x = 5;
+
+x += 2;   // 7
+x -= 1;   // 6
+x *= 3;   // 18
+x /= 2;   // 9
+```
+
+### Comparison Operators
+
+```js
+5 > 3;   // true
+5 < 3;   // false
+5 >= 5;  // true
+5 <= 4;  // false
+```
+
+Comparison operators return either `true` or `false`.
+
+
+## Operations: Double vs Triple Equals
+
+#### Double Equals (`==`)
+
+Performs type conversion or only value matteres.
+
+```js
+5 == "5";      // true
+true == 1;     // true
+false == 0;    // true
+```
+
+#### Triple Equals (`===`)
+
+Checks both value and type.
+
+```js
+5 === 5;     // true
+5 === "5";   // false
+```
+
+> With `===`, both the value and type must match.
+
+
+
+
+
+
+
+## Functions: Why Use Functions?
+
+Instead of repeating:
+
+```js
+console.log("Hello");
+console.log("Hello");
+```
+
+You can define the function once and call repeatedly:
+
+```js
+function sayHello() {
+  console.log("Hello");
+}
+```
+
+```js
+sayHello();
+sayHello();
+...
+```
+
+Output:
+
+```
+Hello
+Hello
+```
+
+## Functions: Parameters and Arguments
+
+```js
+function greet(name) {
+  console.log("Hello " + name);
+}
+```
+
+Usage:
+
+```js
+greet("Rita");
+greet("Saniya");
+```
+
+Output:
+
+```
+Hello Rita
+Hello Saniya
+```
+
+- Parameter: `name`
+- Argument: `"Rita"` or `"Saniya"`
+
+## Functions: Functions as Values
+
+```js
+const square = function(num) {
+  return num * num;
+};
+
+console.log(square(5));
+```
+Same Function Written Normally (called the same way) 
+
+```js
+function square(num) {
+  return num * num;
+} 
+```
+Output:
+
+```
+25
+```
+
+Functions can be stored in variables.
+
+## Functions: Arrow Functions
+
+Normal:
+
+```js
+const square = function(num) {
+  return num * num;
+};
+```
+
+Arrow:
+
+```js
+const square = (num) => {
+  return num * num;
+};
+```
+
+Short form:
+
+```js
+const square = num => num * num;
+```
+
+All three are equivalent.
 
 ## Callback Functions
 
-## Array Functions
+A callback is a function passed into another function.
 
-## Variables
-- no need to define the type
-- let vs const
+```js
+function runCallback(callback) {
+  callback();
+}
 
-## Printing to the Screen
+function sayHello() {
+  console.log("Hello");
+}
 
-## Operations
-- three equals signs
+runCallback(sayHello);
+```
 
-## Strings?
+Output:
+
+```
+Hello
+```
+`callback` is a function passed into another function and called later.
+
+## Array Functions: Review for Arrays 
+
+
+```js
+const nums = [10, 20, 30];
+```
+
+
+| Index | 0 | 1 | 2 |
+|-------|---|---|---|
+| Value | 10 | 20 | 30 |
+
+Access elements:
+
+```js
+console.log(nums[0]); // 10
+console.log(nums[2]); // 30
+```
+
+## Array Functions: forEach()
+
+Meaning: Do something for every item in the array.
+
+```js
+const nums = [1, 2, 3];
+
+nums.forEach(num => console.log(num));
+```
+
+Output:
+
+```js
+1
+2
+3
+```
+
+## Array Functions: map()
+
+Create a new array by transforming every item.
+
+```js
+const nums = [1, 2, 3, 4];
+
+const squares = nums.map(num => num * num);
+```
+
+Result:
+
+```js
+[1, 4, 9, 16]
+```
+
+## Array Functions: push()
+
+Meaning: Add something to the end of the array.
+
+```js
+const nums = [1, 2, 3];
+nums.push(4);
+```
+
+Result:
+
+```js
+[1, 2, 3, 4]
+```
+
+Can also add multiple items
+
+## Array Functions: pop()
+
+Remove the last item from the array and returns the removed item.
+
+```js
+const nums = [1, 2, 3, 4];
+
+nums.pop();
+```
+
+Result:
+
+```js
+[1, 2, 3]
+```
+
+## Strings
+A string is a sequence of characters enclosed by '' or "".
+
+```js
+const word = "hello";
+```
+
+Like arrays, characters are accessed by index:
+
+```js
+console.log(word[0]); // h
+console.log(word[4]); // o
+```
+Strings are immutable
+
+```js
+word[0] = "H";
+console.log(word); // "hello"
+```
+
+This does **not** change the string.
+
+Accessing length: 
+
+```js
+console.log(word.length); // 5
+```
+
+## Objects
+
+Like struct in C, objects allows us to group related information together.
+
+```js
+const student = {
+  name: "Rita",
+  age: 19,
+  major: "Electrical Engineering"
+};
+```
+
+Access information using `.`:
+
+```js
+console.log(student.name); // Rita
+console.log(student.age);  // 19
+```
 
 ## Object Destructuring
+
+Object destructuring is a shortcut that lets you take values from an object and directly turn them into variables.
+
+Instead of:
+
+```js
+const name = student.name; // breaking into separate variables
+const age = student.age;
+```
+
+We can write this:
+
+```js
+const { name, age } = student;
+```
+```js
+console.log(name); // Rita
+console.log(age);  // 19
+```
