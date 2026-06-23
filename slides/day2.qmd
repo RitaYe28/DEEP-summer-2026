@@ -569,6 +569,7 @@ We can write this:
 ```js
 const { name, age } = student;
 ```
+
 ```js
 console.log(name); // Rita
 console.log(age);  // 19
