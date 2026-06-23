@@ -422,9 +422,11 @@ Hello
 
 ## Array Functions: Review for Arrays 
 
+
 ```js
 const nums = [10, 20, 30];
 ```
+
 
 | Index | 0 | 1 | 2 |
 |-------|---|---|---|
@@ -434,30 +436,28 @@ Access elements:
 
 ```js
 console.log(nums[0]); // 10
+console.log(nums[2]); // 30
 ```
 
-## Array Functions
-
-### forEach()
+## Array Functions: forEach()
 
 Meaning: Do something for every item in the array.
 
 ```js
-const nums = [1, 2, 3, 4];
+const nums = [1, 2, 3];
 
 nums.forEach(num => console.log(num));
 ```
 
 Output:
 
-```
+```js
 1
 2
 3
-4
 ```
 
-### map()
+## Array Functions: map()
 
 Create a new array by transforming every item.
 
@@ -473,9 +473,7 @@ Result:
 [1, 4, 9, 16]
 ```
 
-## Array Functions
-
-### push()
+## Array Functions: push()
 
 Meaning: Add something to the end of the array.
 
@@ -492,7 +490,7 @@ Result:
 
 Can also add multiple items
 
-### pop()
+## Array Functions: pop()
 
 Remove the last item from the array and returns the removed item.
 
@@ -507,7 +505,6 @@ Result:
 ```js
 [1, 2, 3]
 ```
-
 
 ## Strings
 A string is a sequence of characters enclosed by '' or "".
