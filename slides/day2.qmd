@@ -189,9 +189,9 @@ Once assigned, a `const` variable cannot change to another value.
 
 
 
-# Printing Output
+## Printing Output
 
-## `console.log()`
+### `console.log()`
 
 ```js
 console.log("Hello");
@@ -203,7 +203,7 @@ Output:
 Hello
 ```
 
-## Multiple Values
+### Multiple Values
 
 ```js
 let a = 5;
@@ -221,22 +221,21 @@ Output:
 
 
 
-## Operations
-### Arithmetic Operators
+## Operations: Arithmetic Operators
 
 ```js
 let a = 10;
 let b = 3;
 ```
 
-| Expression | Result |
-|------------|--------|
-| `a + b` | 13 |
-| `a - b` | 7 |
-| `a * b` | 30 |
-| `a / b` | 3.333... |
-| `a % b` | 1 |
-| `a ** b` | 1000 |
+| Operation | Expression | Result |
+|-----------|------------|--------|
+| Addition | `a + b` | 13 |
+| Subtraction | `a - b` | 7 |
+| Multiplication | `a * b` | 30 |
+| Division | `a / b` | 3.333... |
+| Modulus (Remainder) | `a % b` | 1 |
+| Exponentiation | `a ** b` | 1000 |
 
 
 
@@ -264,8 +263,7 @@ x /= 2;   // 9
 Comparison operators return either `true` or `false`.
 
 
-## Operations
-### Double Equals vs Triple Equals
+## Operations: Double Equals vs Triple Equals
 
 #### Double Equals (`==`)
 
@@ -286,8 +284,6 @@ Checks both value and type.
 5 === "5";   // false
 ```
 
-Examples:
-
 ```js
 0 == false;   // true
 0 === false;  // false
@@ -301,16 +297,238 @@ Examples:
 
 
 
-## Functions
-- arrow definition
+## Functions: Why Use Functions?
 
+Instead of repeating:
+
+```js
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+```
+
+Define once:
+
+```js
+function sayHello() {
+  console.log("Hello");
+}
+```
+
+Call repeatedly:
+
+```js
+sayHello();
+sayHello();
+sayHello();
+```
+
+Output:
+
+```
+Hello
+Hello
+Hello
+```
+
+## Functions: Parameters and Arguments
+
+```js
+function greet(name) {
+  console.log("Hello " + name);
+}
+```
+
+Usage:
+
+```js
+greet("Bob");
+greet("Alice");
+```
+
+Output:
+
+```
+Hello Bob
+Hello Alice
+```
+
+- Parameter: `name`
+- Argument: `"Bob"` or `"Alice"`
+
+## Functions: Functions as Values
+
+```js
+const square = function(num) {
+  return num * num;
+};
+
+console.log(square(5));
+```
+Same Function Written Normally (called the same way) 
+
+```js
+function square(num) {
+  return num * num;
+} 
+```
+Output:
+
+```
+25
+```
+
+Functions can be stored in variables.
+
+## Functions: Arrow Functions
+
+Normal:
+
+```js
+const square = function(num) {
+  return num * num;
+};
+```
+
+Arrow:
+
+```js
+const square = (num) => {
+  return num * num;
+};
+```
+
+Short form:
+
+```js
+const square = num => num * num;
+```
+
+All three are equivalent.
 
 ## Callback Functions
 
+A callback is a function passed into another function.
+
+```js
+function runCallback(callback) {
+  callback();
+}
+
+function sayHello() {
+  console.log("Hello");
+}
+
+runCallback(sayHello);
+```
+
+Output:
+
+```
+Hello
+```
+`callback` is a function passed into another function and called later.
+
+## Array Functions: Review for Arrays 
+
+```js
+const nums = [10, 20, 30];
+```
+
+| Index | 0 | 1 | 2 |
+|-------|---|---|---|
+| Value | 10 | 20 | 30 |
+
+Access elements:
+
+```js
+console.log(nums[0]); // 10
 
 ## Array Functions
 
+### forEach()
 
+Meaning: Do something for every item in the array.
+
+```js
+const nums = [1, 2, 3, 4];
+
+nums.forEach(num => console.log(num));
+```
+
+Output:
+
+```
+1
+2
+3
+4
+```
+
+### map()
+
+Create a new array by transforming every item.
+
+```js
+const nums = [1, 2, 3, 4];
+
+const squares = nums.map(num => num * num);
+```
+
+Result:
+
+```js
+[1, 4, 9, 16]
+```
+
+## Array Functions
+
+### push()
+
+Meaning: Add something to the end of the array.
+
+```js
+const nums = [1, 2, 3];
+
+nums.push(4);
+```
+
+Result:
+
+```js
+[1, 2, 3, 4]
+```
+
+Can also add multiple items
+
+```js
+const nums = [1, 2, 3];
+
+nums.push(4, 5);
+
+```
+
+Output:
+
+```js
+[1, 2, 3, 4, 5]
+```
+
+### pop()
+
+Remove the last item from the array and returns the removed item.
+
+```js
+const nums = [1, 2, 3, 4];
+
+nums.pop();
+```
+
+Result:
+
+```js
+[1, 2, 3]
+```
 
 
 
