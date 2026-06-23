@@ -322,7 +322,7 @@ Hello
 Hello
 ```
 
-## Functions: Parameters and Arguments
+## Functions: Parameters & Arguments
 
 ```js
 function greet(name) {
